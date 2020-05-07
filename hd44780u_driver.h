@@ -54,15 +54,15 @@
 
 // Macros required for row / col limit
 #define HD44780U_LCD_1R_COL_MAXLEN  0x50
-#define HD44780U_LCD_2R_COL_MAXLEN 	0x28
-#define HD44780U_LCD_ROW_MAXLEN    	0x02
+#define HD44780U_LCD_2R_COL_MAXLEN  0x28
+#define HD44780U_LCD_ROW_MAXLEN     0x02
 
 // Macros utilized for reporting errors
-#define HD44780U_ERR_NONE	          0x00
+#define HD44780U_ERR_NONE             0x00
 #define HD44780U_ERR_NOT_INITIALIZED  0x01
 #define HD44780U_ERR_NOT_RUNNING      0x02
-#define HD44780U_ERR_INV_DEV_MODE 	  0x03
-#define HD44780U_ERR_INV_CELL_NUM	  0x04
+#define HD44780U_ERR_INV_DEV_MODE     0x03
+#define HD44780U_ERR_INV_CELL_NUM     0x04
 #define HD44780U_ERR_INV_CURSOR       0x05
 #define HD44780U_ERR_MSG_TOO_LONG     0x06
 #define HD44780U_ERR_NO_SPACE         0x07
