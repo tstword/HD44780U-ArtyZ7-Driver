@@ -1,7 +1,7 @@
 #include "hd44780u_driver.h"
 #include "sleep.h"
 
-void hd44780u_enable_pulse(struct hd44780u_dev *device) {
+static inline void hd44780u_enable_pulse(struct hd44780u_dev *device) {
     *(device->gpio_base) &= ~(1 << device->enable_pin);
     usleep(1);
     *(device->gpio_base) |= (1 << device->enable_pin);
@@ -10,7 +10,7 @@ void hd44780u_enable_pulse(struct hd44780u_dev *device) {
     usleep(42);
 }
 
-void hd44780u_write_4bit(struct hd44780u_dev *device, uint8_t data) {
+static void hd44780u_write_4bit(struct hd44780u_dev *device, uint8_t data) {
     for(int i = 0; i < 4; ++i) {
         *(device->gpio_base) &= ~(1 << device->data_pins[i]);
         *(device->gpio_base) |= ((data & 0x1) << device->data_pins[i]);
@@ -19,7 +19,7 @@ void hd44780u_write_4bit(struct hd44780u_dev *device, uint8_t data) {
     hd44780u_enable_pulse(device);
 }
 
-void hd44780u_write_8bit(struct hd44780u_dev *device, uint8_t data) {
+static void hd44780u_write_8bit(struct hd44780u_dev *device, uint8_t data) {
     for(int i = 0; i < 8; ++i) {
         *(device->gpio_base) &= ~(1 << device->data_pins[i]);
         *(device->gpio_base) |= ((data & 0x1) << device->data_pins[i]);
@@ -28,7 +28,7 @@ void hd44780u_write_8bit(struct hd44780u_dev *device, uint8_t data) {
     hd44780u_enable_pulse(device);
 }
 
-void hd44780u_send_command(struct hd44780u_dev *device, uint8_t data, uint8_t rs) {
+static inline void hd44780u_send_command(struct hd44780u_dev *device, uint8_t data, uint8_t rs) {
     *(device->gpio_base) &= ~(1 << device->select_pin);
     *(device->gpio_base) |= (rs & 0x1) << device->select_pin;
 
