@@ -1,3 +1,4 @@
+
 # Hitachi LCD-II Software Driver
 
 > A software driver written in C for the Hitachi LCD-II set of devices targeted for the Arty Z7 family of devices.
@@ -9,7 +10,6 @@
 
 - Clone this repo to your local machine using `https://github.com/tstword/HD44780U-ArtyZ7-Driver`
 
----
 ## Using The Source Code
 
 ### Prerequisites
