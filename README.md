@@ -16,9 +16,9 @@
 
 ### Example Program
 
-<img src="https://drive.google.com/uc?export=view&id=1n-HHJz0yQ2-7-PcVBxnbQBA1bHT_3XC1">
+The following is an example program that displays the message "Hello World" on the first line and the message "Writing: 101" on the second line:
 
-- The following is an example program that displays the message "Hello World" on the first line and the message "Writing: 101" on the second line:
+<img src="https://drive.google.com/uc?export=view&id=1n-HHJz0yQ2-7-PcVBxnbQBA1bHT_3XC1">
 
 ```C
 #include "xil_printf.h"
