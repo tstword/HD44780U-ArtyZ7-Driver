@@ -18,6 +18,8 @@
 
 - The following is an example program that displays the message "Hello World" on the first row and the message "Writing: 101" on the second row.
 
+<img src="https://drive.google.com/uc?id=1ji7DadzAVJq8K3Obqcbm2QthnsG9ylx8">
+
 ### Source Code
 ```C
 #include "xil_printf.h"
@@ -71,5 +73,3 @@ int main(void)
     return 0;
 }
 ```
-
-<img src="https://drive.google.com/uc?id=11zlgp0kJNwEY3gTKurwlu8hYL7D-q5sQ">
