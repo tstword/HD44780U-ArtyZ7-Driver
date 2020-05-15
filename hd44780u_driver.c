@@ -61,7 +61,7 @@ int hd44780u_begin(struct hd44780u_dev *device, uint8_t rows, uint8_t columns) {
             | HD44780U_LCD_FONT_5x8;
     
     uint8_t display_flags = HD44780U_LCD_DISPLAY_CTL | HD44780U_LCD_DISPLAY_ON |
-                            HD44780U_LCD_CURSOR_OFF | HD44780U_LCD_BLINKING_ON;
+                            HD44780U_LCD_CURSOR_OFF | HD44780U_LCD_BLINKING_OFF;
     
     uint8_t entry_flags = HD44780U_LCD_ENTRY_CTL | HD44780U_LCD_INCREMENT |
                             HD44780U_LCD_UPDATE_CURS;
@@ -147,8 +147,8 @@ int hd44780u_begin(struct hd44780u_dev *device, uint8_t rows, uint8_t columns) {
     return 0;
 }
 
-int hd44780u_init(struct hd44780u_dev *device, uint32_t gpio_addr, uint8_t rs, uint8_t en, uint8_t *data_pins, uint8_t lcd_mode) {
-    uint32_t gpio_tri = 0xFFFFFFFF;
+static int hd44780u_init(struct hd44780u_dev *device, uint32_t gpio_addr, uint8_t rs, uint8_t en, uint8_t *data_pins, uint8_t lcd_mode) {
+    uint32_t gpio_tri;
 
     // Verify 8-bit or 4-bit mode
     if(lcd_mode != HD44780U_DEV_MODE_4BIT && lcd_mode != HD44780U_DEV_MODE_8BIT) {
@@ -158,17 +158,20 @@ int hd44780u_init(struct hd44780u_dev *device, uint32_t gpio_addr, uint8_t rs, u
     }
     device->lcd_mode = lcd_mode;
 
+    device->gpio_base = (volatile uint32_t *)gpio_addr;
+    gpio_tri = *(device->gpio_base + 1);
+
     for(int i = 0; i < lcd_mode; ++i) {
         device->data_pins[i] = data_pins[i];
-        gpio_tri ^= (1 << data_pins[i]);
+        gpio_tri &= ~(1 << data_pins[i]);
     }
 
     device->enable_pin = en;
     device->select_pin = rs;
-    gpio_tri ^= (1 << rs) | (1 << en);
 
-    device->gpio_base = (volatile uint32_t *)gpio_addr;
+    // Set GPIO registers to default values
     *(device->gpio_base) = 0;
+    gpio_tri &= ~((1 << rs) | (1 << en));
     *(device->gpio_base + 1) = gpio_tri;
 
     device->initialized = 1;
@@ -176,6 +179,18 @@ int hd44780u_init(struct hd44780u_dev *device, uint32_t gpio_addr, uint8_t rs, u
     device->error_code = HD44780U_ERR_NONE;
 
     return 0;
+}
+
+int hd44780u_init_4bit(struct hd44780u_dev *device, uint32_t gpio_addr, uint8_t rs, uint8_t en,
+		uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7) {
+	uint8_t data_pins[4] = { d4, d5, d6, d7 };
+	return hd44780u_init(device, gpio_addr, rs, en, data_pins, HD44780U_DEV_MODE_4BIT);
+}
+
+int hd44780u_init_8bit(struct hd44780u_dev *device, uint32_t gpio_addr, uint8_t rs, uint8_t en,
+		uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3, uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7) {
+	uint8_t data_pins[8] = { d0, d1, d2, d3, d4, d5, d6, d7 };
+	return hd44780u_init(device, gpio_addr, rs, en, data_pins, HD44780U_DEV_MODE_8BIT);
 }
 
 int hd44780u_write_int(struct hd44780u_dev *device, int value) {
@@ -278,4 +293,25 @@ int hd44780u_set_cursor(struct hd44780u_dev *device, uint8_t row, uint8_t column
     device->curr_col = column;
 
     return 0;
+}
+
+const char *hd44780u_error_msg(struct hd44780u_dev *device) {
+	switch(device->error_code) {
+		case HD44780U_ERR_NONE:
+			return "no error has occurred";
+		case HD44780U_ERR_NOT_INITIALIZED:
+			return "structure not initialized";
+		case HD44780U_ERR_NOT_RUNNING:
+			return "device not running";
+		case HD44780U_ERR_INV_DEV_MODE:
+			return "invalid operating mode";
+		case HD44780U_ERR_INV_CELL_NUM:
+			return "invalid argument for row or column";
+		case HD44780U_ERR_INV_CURSOR:
+			return "invalid arguments for cursor";
+		case HD44780U_ERR_NO_SPACE:
+			return "out of memory cannot write message";
+	}
+
+	return "unrecognized error code";
 }
