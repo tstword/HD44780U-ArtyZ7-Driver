@@ -16,10 +16,9 @@
 
 ### Example Program
 
-- The following is an example program that displays the message "Hello World" on the first line and the message "Writing: 101" on the second line:
+- The following is an example program that displays the message "Hello World" on the first row and the message "Writing: 101" on the second row.
 
-<img src="https://drive.google.com/uc?id=11zlgp0kJNwEY3gTKurwlu8hYL7D-q5sQ">
-
+### Source Code
 ```C
 #include "xil_printf.h"
 #include "hd44780u_driver.h"
@@ -72,3 +71,5 @@ int main(void)
     return 0;
 }
 ```
+
+<img src="https://drive.google.com/uc?id=11zlgp0kJNwEY3gTKurwlu8hYL7D-q5sQ">
