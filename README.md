@@ -1,4 +1,3 @@
-
 # Hitachi LCD-II Software Driver
 
 > A software driver written in C for the Hitachi LCD-II set of devices targeted for the Arty Z7 family of devices.
