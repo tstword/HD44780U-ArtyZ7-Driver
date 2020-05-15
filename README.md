@@ -71,5 +71,6 @@ int main(void)
     return 0;
 }
 ```
-
-<a href="https://ibb.co/cDvTrdH"><img src="https://i.ibb.co/5B9cRVy/mid-res-vert.jpg" alt="mid-res-vert" border="0"></a>
+<center>
+<img src="https://i.ibb.co/5B9cRVy/mid-res-vert.jpg" alt="mid-res-vert">
+</center>
