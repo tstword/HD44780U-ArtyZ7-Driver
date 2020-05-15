@@ -38,7 +38,7 @@
 #define EN 0x8	/* en pin connected to IO 8 */
 #define RS 0x9  /* rs pin connected to IO 9 */
 
-#define AXI4_GPIO_BASE_ADDR 0x41200000 /* Starting address of memory-mapped registers */
+#define AXI_GPIO_BASEADDR 0x41200000 /* Starting address of memory-mapped registers */
 
 int main(void)
 {
@@ -48,9 +48,9 @@ int main(void)
 
     /* Initialize the LCD structure (8-bit mode or 4-bit mode) */
 #ifdef MODE_4BIT
-    init_result = hd44780u_init_4bit(&lcd_device, AXI4_GPIO_BASE_ADDR, RS, EN, D4, D5, D6, D7);
+    init_result = hd44780u_init_4bit(&lcd_device, AXI_GPIO_BASEADDR, RS, EN, D4, D5, D6, D7);
 #else
-    init_result = hd44780u_init_8bit(&lcd_device, AXI4_GPIO_BASE_ADDR, RS, EN, D0, D1, D2, D3, D4, D5, D6, D7);
+    init_result = hd44780u_init_8bit(&lcd_device, AXI_GPIO_BASEADDR, RS, EN, D0, D1, D2, D3, D4, D5, D6, D7);
 #endif
     if(init_result == -1) {
         xil_printf("Failed to initialized LCD structure: %s\r\n", hd44780u_error_msg(&lcd_device));
