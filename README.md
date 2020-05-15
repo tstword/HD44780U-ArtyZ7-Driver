@@ -72,4 +72,4 @@ int main(void)
 }
 ```
 
-<img src="https://drive.google.com/uc?id=1ji7DadzAVJq8K3Obqcbm2QthnsG9ylx8">
+<a href="https://ibb.co/cDvTrdH"><img src="https://i.ibb.co/5B9cRVy/mid-res-vert.jpg" alt="mid-res-vert" border="0"></a>
